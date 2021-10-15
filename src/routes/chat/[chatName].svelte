@@ -67,7 +67,7 @@
 
   {#if allMsg.length }
     {#each allMsg as msg}
-      <p>{msg.message}</p>
+      <p><strong class="{userName == msg.userName? 'is-you' : ''}">{msg.userName}: </strong>{msg.message}</p>
     {/each}
   {/if}
 </div>
@@ -135,6 +135,10 @@
 
     p {
       margin: 0;
+    }
+
+    .is-you {
+      color: teal;
     }
   }
 
