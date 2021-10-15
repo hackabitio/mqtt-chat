@@ -5,7 +5,6 @@
 <script>
 	import { goto } from '$app/navigation';
 
-	import Counter from '$lib/Counter.svelte';
 	const selectARoom = () => {
 		roomName = roomName.replace(/\s+/g, '-').toLowerCase()
 		goto(`/chat/${roomName}`)
