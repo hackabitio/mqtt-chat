@@ -54,6 +54,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Chat/{chatName}</title>
+</svelte:head>
+
 <div class="set-user-name">
   <input type="text" id="userName" bind:value={userName}>
   <button class="connect" disabled="{btnDisabled}" on:click={connectMqtt}><span>Connect</span>
