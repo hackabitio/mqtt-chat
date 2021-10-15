@@ -22,23 +22,18 @@
 	<h1>About this app</h1>
 
 	<p>
-		This is a <a href="https://kit.svelte.dev">SvelteKit</a> app. You can make your own by typing the
-		following into your command line and following the prompts:
+		This is a simple chat application built using <a href="https://kit.svelte.dev">SvelteKit</a>. You can make your own by following these steps:
 	</p>
 
-	<!-- TODO lose the @next! -->
-	<pre>npm init svelte@next</pre>
+	<p>Clone this repository, rename <code>/src/lib/variables.example.js</code> to <code>/src/lib/variables.js</code> and fill the required data. Then run:</p>
 
-	<p>
-		The page you're looking at is purely static HTML, with no client-side interactivity needed.
-		Because of that, we don't need to load any JavaScript. Try viewing the page's source, or opening
-		the devtools network panel and reloading.
-	</p>
+	<pre>npm install</pre>
+	<p>For development:</p>
+	<pre>npm run dev</pre>
 
-	<p>
-		The <a href="/todos">TODOs</a> page illustrates SvelteKit's data loading and form handling. Try using
-		it with JavaScript disabled!
-	</p>
+	<p>After you done with development, run:</p>
+	<pre>npm run build</pre>
+
 </div>
 
 <style>
