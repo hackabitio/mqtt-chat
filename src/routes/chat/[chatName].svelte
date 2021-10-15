@@ -18,7 +18,7 @@
     const options = {
       clean: true,
       connectTimeout: 4000,
-      clientId: 'client' + userName,
+      clientId: 'client' + userName.replace(/\s+/g, '-').toLowerCase(),
       username: 'foad',
       password: 'foadyousefi'
     }
@@ -46,7 +46,7 @@
   const publishMessage = () => {
     let msg = {
       message: msgContent,
-      userName
+      userName: userName.replace(/\s+/g, '-').toLowerCase()
     }
     client.publish('chat/' + chatName , JSON.stringify(msg))
     msgContent = ''
