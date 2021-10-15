@@ -127,6 +127,7 @@
     flex-direction: column;
     justify-content: end;
     padding: 10px;
+    overflow: scroll;
 
     &.not-connected {
       background-color: #EEE;
