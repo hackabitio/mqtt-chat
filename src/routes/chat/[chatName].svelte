@@ -1,6 +1,7 @@
 <script>
   import { page } from '$app/stores'
   import * as mqtt from 'mqtt/dist/mqtt.min'
+  import { ENV_VARS } from '$lib/variables'
 
   let notConnected = true
   let client
@@ -19,10 +20,10 @@
       clean: true,
       connectTimeout: 4000,
       clientId: 'client' + userName.replace(/\s+/g, '-').toLowerCase(),
-      username: 'foad',
-      password: 'foadyousefi'
+      username: ENV_VARS.username,
+      password: ENV_VARS.password
     }
-    const connectUrl = 'ws://mqtt.sendify.org:8081'
+    const connectUrl = ENV_VARS.mqttUrl
     client = mqtt.connect(connectUrl, options)
 
     client.on('connect', () => {
