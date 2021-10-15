@@ -55,21 +55,22 @@
 
 	#chatRoom {
 		padding: 15px;
-		width: calc(100% - 30px);
+		width: 100%;
 		border: 1px solid rgba(0,0,0,0.2);
 		border-radius: 8px;
 	}
 
 	.selectRoom {
 		position: relative;
-		width: 60%;
+		width: 100%;
+		max-width: 700px;
 	}
 
 	.submit {
 		position: absolute;
 		display: inline-block;
 		top: 2px;
-		right: 0;
+		right: 2px;
 		bottom: 2px;
 		width: 100px;
 		border: inherit;
