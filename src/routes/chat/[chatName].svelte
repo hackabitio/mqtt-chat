@@ -121,7 +121,7 @@
       }
 
       svg {
-        width: 20px;
+        width: 15px;
 
         path {
           fill: white;
