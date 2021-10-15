@@ -85,9 +85,17 @@
 <style lang="scss">
   .set-user-name,
   .message {
-    display: grid;
-    grid-template-columns: 5fr 1fr;
+    display: flex;
+    max-height: 40px;
 
+    input {
+      flex: 5;
+      padding-left: 20px;
+    }
+
+    button {
+      flex: 1;
+    }
     .connect {
       display: flex;
       align-items: center;
