@@ -16,31 +16,35 @@
   let allMsg = []
 
   const connectMqtt = () => {
-    const options = {
-      clean: true,
-      connectTimeout: 4000,
-      clientId: 'client' + userName.replace(/\s+/g, '-').toLowerCase(),
-      username: ENV_VARS.username,
-      password: ENV_VARS.password
-    }
-    const connectUrl = ENV_VARS.mqttUrl
-    client = mqtt.connect(connectUrl, options)
+    if (notConnected) {
+      const options = {
+        clean: true,
+        connectTimeout: 4000,
+        clientId: 'client' + userName.replace(/\s+/g, '-').toLowerCase(),
+        username: ENV_VARS.username,
+        password: ENV_VARS.password
+      }
+      const connectUrl = ENV_VARS.mqttUrl
+      client = mqtt.connect(connectUrl, options)
 
-    client.on('connect', () => {
-      client.subscribe('chat/' + chatName , err => {
-        if (!err) {
-          notConnected = false
-          setTimeout(() => {
-            document.getElementById('message').focus()
-          }, 20)
-          // client.publish('chat/' + chatName , JSON.stringify({message: 'Hello mqtt', userName}))
-        }
+      client.on('connect', () => {
+        client.subscribe('chat/' + chatName , err => {
+          if (!err) {
+            notConnected = false
+            setTimeout(() => {
+              document.getElementById('message').focus()
+            }, 20)
+          }
+        })
+        client.on('message', (topic, message) => {
+          message = JSON.parse(message.toString())
+          allMsg = [...allMsg, message]
+        })
       })
-      client.on('message', (topic, message) => {
-        message = JSON.parse(message.toString())
-        allMsg = [...allMsg, message]
-      })
-    })
+    } else {
+      client.end()
+      notConnected = true
+    }
 
   }
 
@@ -59,14 +63,19 @@
   <title>Chat/{chatName}</title>
 </svelte:head>
 
-<div class="set-user-name">
+<form class="set-user-name" on:submit|preventDefault={connectMqtt}>
   <input type="text" id="userName" bind:value={userName}>
-  <button class="connect" disabled="{btnDisabled}" on:click={connectMqtt}><span>Connect</span>
+  <button type="submit" class="connect" disabled="{btnDisabled}">
+    {#if notConnected}
+      <span>Connect</span>
+    {:else}
+      <span>Disconnect</span>
+    {/if}
     <svg width="40" height="55" viewBox="0 0 40 55" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M36.6667 13.75H31.6667V1.71875C31.6667 1.26291 31.4911 0.825738 31.1785 0.50341C30.866 0.181082 30.442 0 30 0C29.558 0 29.134 0.181082 28.8215 0.50341C28.5089 0.825738 28.3333 1.26291 28.3333 1.71875V13.75H11.6667V1.71875C11.6667 1.26291 11.4911 0.825738 11.1785 0.50341C10.866 0.181082 10.442 0 10 0C9.55797 0 9.13405 0.181082 8.82149 0.50341C8.50893 0.825738 8.33333 1.26291 8.33333 1.71875V13.75H3.33333C2.44928 13.75 1.60143 14.1122 0.976311 14.7568C0.35119 15.4015 0 16.2758 0 17.1875L0 20.625C0 21.5367 0.35119 22.411 0.976311 23.0557C1.60143 23.7003 2.44928 24.0625 3.33333 24.0625V27.5C3.33333 36.3892 9.93438 43.6369 18.3333 44.5135V55H21.6667V44.5135C30.0656 43.6369 36.6667 36.3892 36.6667 27.5V24.0625C37.5507 24.0625 38.3986 23.7003 39.0237 23.0557C39.6488 22.411 40 21.5367 40 20.625V17.1875C40 16.2758 39.6488 15.4015 39.0237 14.7568C38.3986 14.1122 37.5507 13.75 36.6667 13.75V13.75ZM33.3333 27.5C33.3333 31.1467 31.9286 34.6441 29.4281 37.2227C26.9276 39.8013 23.5362 41.25 20 41.25C16.4638 41.25 13.0724 39.8013 10.5719 37.2227C8.07142 34.6441 6.66667 31.1467 6.66667 27.5V24.0625H33.3333V27.5ZM36.6667 20.625H3.33333V17.1875H36.6667V20.625Z" fill="black"/>
     </svg>
   </button>
-</div>
+</form>
 
 <div class="messages {notConnected ? 'not-connected' : ''}">
 
